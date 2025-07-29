@@ -72,7 +72,7 @@ export function UsersDataTable({ columns, data }: UsersDataTableProps) {
         title="Users"
         description="Manage users, their roles, and permissions."
       />
-        <div className="bg-white rounded-xl border border-gray-200 shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
+              <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
           <UsersSearchFilters
             table={table}
             globalFilter={globalFilter}
