@@ -4,6 +4,7 @@ import { adminTernSecureAuth as adminAuth } from "@/lib/admin-init"
 import { requireAdmin } from "@/lib/auth-middleware"
 import { revalidatePath } from "next/cache"
 import type { UserData } from "@/lib/types"
+import { redis, type DisabledUserRecord } from "@/lib/redis"
 
 
 export async function getAllUsers(): Promise<UserData[]> {
@@ -30,6 +31,7 @@ export async function disableUser(uid: string): Promise<void> {
   await requireAdmin()
 
   try {
+    await redis.set(`disabled_user:${uid}`, JSON.stringify({ uid, disabled: true }))
     await adminAuth.updateUser(uid, { disabled: true })
     revalidatePath("/admin/users")
   } catch (error) {
