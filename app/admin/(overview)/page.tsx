@@ -16,6 +16,8 @@ import {
   Calendar,
 } from "lucide-react";
 import { PageHeader, PageWrapper } from "@/components/page-layout";
+import { Suspense } from "react";
+import { DashboardSkeleton } from "@/components/skeleton";
 
 async function getOverviewMetrics() {
   const [usersResult, disabledUsersFromRedis] = await Promise.all([
@@ -58,7 +60,7 @@ async function getOverviewMetrics() {
   };
 }
 
-export default async function AdminOverviewPage() {
+async function DashboardContent() {
   const metrics = await getOverviewMetrics();
 
   return (
@@ -256,4 +258,12 @@ export default async function AdminOverviewPage() {
       </div>
     </PageWrapper>
   );
+}
+
+export default function AdminOverviewPage() {
+  return (
+    <Suspense fallback={<DashboardSkeleton />}>
+      <DashboardContent />
+    </Suspense>
+  )
 }

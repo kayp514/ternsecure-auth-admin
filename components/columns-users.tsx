@@ -3,9 +3,8 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowUpDown, XCircle, CheckCircle2 } from "lucide-react"
+import { ArrowUpDown, XCircle, CheckCircle2 } from "lucide-react";
 import type { UserData } from "@/lib/types";
-
 
 export const columns: ColumnDef<UserData>[] = [
   {
@@ -22,14 +21,19 @@ export const columns: ColumnDef<UserData>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div
-        className="font-medium text-sm truncate pr-2"
-        title={row.getValue("email")}
-      >
-        {row.getValue("email")}
-      </div>
-    ),
+    cell: ({ row }) => {
+      const email = row.getValue("email") as string;
+      return (
+        <div className="flex items-center min-w-0">
+          <div
+            className="font-medium text-sm text-left truncate max-w-[180px] pr-2"
+            title={email}
+          >
+            {email}
+          </div>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "uid",
@@ -145,7 +149,7 @@ export const columns: ColumnDef<UserData>[] = [
     accessorKey: "disabled",
     header: "Status",
     cell: ({ row }) => {
-      const disabled = row.getValue("disabled") as boolean
+      const disabled = row.getValue("disabled") as boolean;
       return disabled ? (
         <Badge
           variant="outline"
@@ -162,11 +166,11 @@ export const columns: ColumnDef<UserData>[] = [
           <CheckCircle2 className="mr-1 h-3.5 w-3.5" />
           Enabled
         </Badge>
-      )
+      );
     },
     filterFn: (row, id, value) => {
-      const disabled = row.getValue(id) as boolean
-      return value.includes(disabled ? "disabled" : "active")
+      const disabled = row.getValue(id) as boolean;
+      return value.includes(disabled ? "disabled" : "active");
     },
     enableHiding: true,
   },
@@ -174,7 +178,7 @@ export const columns: ColumnDef<UserData>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      return null
+      return null;
     },
     enableHiding: false,
   },
