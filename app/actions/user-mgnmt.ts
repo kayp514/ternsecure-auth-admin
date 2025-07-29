@@ -44,6 +44,7 @@ export async function enableUser(uid: string): Promise<void> {
   await requireAdmin()
 
   try {
+     await redis.del(`disabled_user:${uid}`)
     await adminAuth.updateUser(uid, { disabled: false })
     revalidatePath("/admin/users")
   } catch (error) {
