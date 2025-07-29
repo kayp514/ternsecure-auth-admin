@@ -19,6 +19,9 @@ import { PageHeader, PageWrapper } from "@/components/page-layout";
 import { Suspense } from "react";
 import { DashboardSkeleton } from "@/components/skeleton";
 
+export const dynamic = "force-dynamic";
+
+
 async function getOverviewMetrics() {
   const [usersResult, disabledUsersFromRedis] = await Promise.all([
     getAllUsers(),

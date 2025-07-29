@@ -1,6 +1,6 @@
 import { getAllUsers } from "@/app/actions/user-mgnmt"
 import { columns } from "@/components/columns-users"
-import { UsersDataTable } from "@/components/table-data"
+import { UsersPageClient } from "@/components/users-client";
 import { UsersTableSkeleton } from "@/components/skeleton"
 import { Suspense } from "react";
 
@@ -10,7 +10,7 @@ async function UsersContent() {
   const users = await getAllUsers()
 
   return (
-    <UsersDataTable columns={columns} data={users} />
+    <UsersPageClient columns={columns} data={users} />
   )
 }
 

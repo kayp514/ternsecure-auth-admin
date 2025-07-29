@@ -17,12 +17,14 @@ interface UsersSearchFiltersProps {
   table: Table<UserData>;
   globalFilter: string;
   setGlobalFilter: (value: string) => void;
+  disabled?: boolean
 }
 
 export function UsersSearchFilters({
   table,
   globalFilter,
   setGlobalFilter,
+  disabled = false,
 }: UsersSearchFiltersProps) {
   return (
     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 pb-3">
@@ -34,13 +36,14 @@ export function UsersSearchFilters({
             value={globalFilter ?? ""}
             onChange={(event) => setGlobalFilter(String(event.target.value))}
             className="pl-8 w-full sm:w-[300px]"
+            disabled={disabled}
           />
         </div>
       </div>
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="ml-auto bg-transparent">
+          <Button variant="outline" className="ml-auto bg-transparent" disabled={disabled}>
             <Columns className="mr-2 h-4 w-4" />
             Columns
           </Button>

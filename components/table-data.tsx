@@ -4,12 +4,10 @@ import { useState } from "react";
 import {
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
   type ColumnDef,
-  type ColumnFiltersState,
   type SortingState,
   type VisibilityState,
 } from "@tanstack/react-table";
@@ -30,40 +28,46 @@ import { PageHeader, PageWrapper } from "@/components/page-layout";
 interface UsersDataTableProps {
   columns: ColumnDef<UserData>[];
   data: UserData[];
+  totalUsers: number;
+  totalPages: number;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+  globalFilter: string;
+  onGlobalFilterChange: (value: string) => void;
+  isLoading?: boolean;
 }
 
-export function UsersDataTable({ columns, data }: UsersDataTableProps) {
+export function UsersDataTable({
+  columns,
+  data,
+  totalUsers,
+  totalPages,
+  currentPage,
+  onPageChange,
+  globalFilter,
+  onGlobalFilterChange,
+  isLoading,
+}: UsersDataTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
     uid: false,
     role: false,
   });
-  const [globalFilter, setGlobalFilter] = useState("");
 
   const table = useReactTable({
     data,
     columns,
     onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onGlobalFilterChange: setGlobalFilter,
-    globalFilterFn: "includesString",
     state: {
       sorting,
-      columnFilters,
       columnVisibility,
-      globalFilter,
     },
-    initialState: {
-      pagination: {
-        pageSize: 50,
-      },
-    },
+    manualPagination: true,
+    pageCount: totalPages,
   });
 
   return (
@@ -76,7 +80,8 @@ export function UsersDataTable({ columns, data }: UsersDataTableProps) {
         <UsersSearchFilters
           table={table}
           globalFilter={globalFilter}
-          setGlobalFilter={setGlobalFilter}
+          setGlobalFilter={onGlobalFilterChange}
+          disabled={isLoading}
         />
         <div className="border-t overflow-hidden">
           <div className="overflow-x-auto min-w-0">
@@ -148,7 +153,13 @@ export function UsersDataTable({ columns, data }: UsersDataTableProps) {
             </Table>
           </div>
         </div>
-        <UsersPagination table={table} />
+        <UsersPagination
+          totalUsers={totalUsers}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={onPageChange}
+          isLoading={isLoading}
+        />
       </div>
     </PageWrapper>
   );

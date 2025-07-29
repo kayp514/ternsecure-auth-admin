@@ -142,7 +142,7 @@ export function UsersPaginationSkeleton({ rowCount = 10 }: { rowCount?: number }
   return (
     <>
       {Array.from({ length: rowCount }).map((_, i) => (
-        <TableRow key={i} className="hover:bg-muted/50">
+        <TableRow key={i} className="hover:bg-muted/50 animate-pulse">
           {/* Email Column */}
           <TableCell className="px-2 py-3 max-w-[200px]">
             <div className="flex items-center min-w-0">
@@ -150,12 +150,12 @@ export function UsersPaginationSkeleton({ rowCount = 10 }: { rowCount?: number }
             </div>
           </TableCell>
 
-          {/* User ID Column */}
+          {/* User ID Column (hidden by default) */}
           <TableCell className="px-2 py-3">
             <Skeleton className="h-4 w-24" />
           </TableCell>
 
-          {/* Role Column */}
+          {/* Role Column (hidden by default) */}
           <TableCell className="px-2 py-3">
             <Skeleton className="h-6 w-16 rounded-full" />
           </TableCell>
@@ -184,5 +184,6 @@ export function UsersPaginationSkeleton({ rowCount = 10 }: { rowCount?: number }
     </>
   )
 }
+
 
 
