@@ -76,3 +76,27 @@ export async function setUserRole(uid: string, role: string): Promise<void> {
     throw new Error("Failed to set user role")
   }
 }
+
+export async function getDisabledUsers(): Promise<DisabledUserRecord[]> {
+  try {
+    const keys = await redis.keys("disabled_user:*")
+    if (keys.length === 0) return []
+
+    const records = await redis.mget(...keys)
+    return records.filter(Boolean) as DisabledUserRecord[]
+  } catch (error) {
+    console.error("Failed to fetch disabled users from Redis:", error)
+    return []
+  }
+}
+
+
+export async function getDisabledUserRecord(uid: string): Promise<DisabledUserRecord | null> {
+  try {
+    const record = await redis.get(`disabled_user:${uid}`)
+    return record as DisabledUserRecord | null
+  } catch (error) {
+    console.error("Failed to fetch disabled user record from Redis:", error)
+    return null
+  }
+}
