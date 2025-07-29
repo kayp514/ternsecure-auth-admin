@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner"
+import { TernSecureProvider } from "@/app/providers/TernSecureProvider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -27,7 +29,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <TernSecureProvider
+          requiresVerification={true}
+        >
+          {children}
+           <Toaster position="top-center" />
+        </TernSecureProvider>
       </body>
     </html>
   );
