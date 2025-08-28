@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
@@ -11,7 +12,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {
   DropdownMenu,
@@ -22,6 +22,23 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import {
+  Edit,
   Trash2,
   UserX,
   UserCheck,
@@ -29,7 +46,6 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 import type { UserData } from "@/lib/types";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import {
   disableUser,
@@ -44,10 +60,16 @@ interface UserActionsCellProps {
 
 export function UserActionsCell({ user }: UserActionsCellProps) {
   const [loading, setLoading] = useState(false);
-const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
-  const [isDisableDialogOpen, setIsDisableDialogOpen] = useState(false)
-  const [isEnableDialogOpen, setIsEnableDialogOpen] = useState(false)
-  const [userToDelete, setUserToDelete] = useState<string | null>(null)
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isDisableDialogOpen, setIsDisableDialogOpen] = useState(false);
+  const [isEnableDialogOpen, setIsEnableDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [userToDelete, setUserToDelete] = useState<string | null>(null);
+  const [editFormData, setEditFormData] = useState({
+    email: user.email,
+    role: user.role,
+  });
+  const [isSaving, setIsSaving] = useState(false);
 
   const handleDisableUser = async (uid: string) => {
     setLoading(true);
@@ -99,6 +121,22 @@ const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
     }
   };
 
+  const handleEditUser = async (uid: string) => {
+    setLoading(true);
+    try {
+      await setUserRole(uid, editFormData.role);
+      toast.success("User role has been successfully updated.", {
+        duration: 3000,
+      });
+    } catch (error) {
+      toast.error("Failed to update user role.", {
+        duration: 3000,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const confirmDeleteUser = () => {
     setUserToDelete(user.uid);
     setIsDeleteDialogOpen(true);
@@ -109,9 +147,17 @@ const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
     setIsDisableDialogOpen(true);
   };
 
-    const confirmEnableUser = () => {
+  const confirmEnableUser = () => {
     setUserToDelete(user.uid);
     setIsEnableDialogOpen(true);
+  };
+
+  const openEditDialog = () => {
+    setEditFormData({
+      email: user.email,
+      role: user.role,
+    });
+    setIsEditDialogOpen(true);
   };
 
   return (
@@ -131,6 +177,10 @@ const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-[160px]">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem onClick={openEditDialog}>
+                <Edit className="mr-2 h-4 w-4" />
+                Edit User
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               {user.disabled ? (
                 <DropdownMenuItem onClick={confirmEnableUser}>
@@ -231,6 +281,78 @@ const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Edit User</DialogTitle>
+            <DialogDescription>
+              Make changes to the user's information. Click save when you're
+              done.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="email" className="text-right">
+                Email
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                value={editFormData.email}
+                onChange={(e) =>
+                  setEditFormData((prev) => ({
+                    ...prev,
+                    email: e.target.value,
+                  }))
+                }
+                className="col-span-3"
+                placeholder="Enter email address"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="role" className="text-right">
+                Role
+              </Label>
+              <Select
+                value={editFormData.role}
+                onValueChange={(value) =>
+                  setEditFormData((prev) => ({ ...prev, role: value }))
+                }
+              >
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="Select a role" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="user">User</SelectItem>
+                  <SelectItem value="moderator">Moderator</SelectItem>
+                  <SelectItem value="admin">Admin</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setIsEditDialogOpen(false)}
+              disabled={isSaving}
+            >
+              Cancel
+            </Button>
+            <Button onClick={handleEditUser} disabled={isSaving}>
+              {isSaving ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Saving...
+                </>
+              ) : (
+                "Save Changes"
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

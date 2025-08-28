@@ -51,8 +51,8 @@ export async function disableUser(uid: string): Promise<void> {
       email: user.email || "",
       disabledTime: new Date().toISOString(),
     };
-    await redis.set(`disabled_user:${uid}`, disabledRecord)
-    revalidatePath("/admin/users")
+    await redis.set(`disabled_user:${uid}`, disabledRecord);
+    revalidatePath("/admin/users");
   } catch (error) {
     console.error("Failed to disable user:", error);
     throw new Error("Failed to disable user");
