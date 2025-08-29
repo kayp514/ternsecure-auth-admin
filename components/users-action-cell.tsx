@@ -64,7 +64,7 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
   const [isDisableDialogOpen, setIsDisableDialogOpen] = useState(false);
   const [isEnableDialogOpen, setIsEnableDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-  const [userToDelete, setUserToDelete] = useState<string | null>(null);
+  const [userToAction, setUserToAction] = useState<string | null>(null);
   const [editFormData, setEditFormData] = useState({
     email: user.email,
     role: user.role,
@@ -138,17 +138,17 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
   };
 
   const confirmDeleteUser = () => {
-    setUserToDelete(user.uid);
+    setUserToAction(user.uid);
     setIsDeleteDialogOpen(true);
   };
 
   const confirmDisableUser = () => {
-    setUserToDelete(user.uid);
+    setUserToAction(user.uid);
     setIsDisableDialogOpen(true);
   };
 
   const confirmEnableUser = () => {
-    setUserToDelete(user.uid);
+    setUserToAction(user.uid);
     setIsEnableDialogOpen(true);
   };
 
@@ -223,7 +223,7 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={() => userToDelete && handleDeleteUser(userToDelete)}
+              onClick={() => userToAction && handleDeleteUser(userToAction)}
               className="bg-red-600 hover:bg-red-700"
             >
               Delete
@@ -248,7 +248,7 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={() => userToDelete && handleDisableUser(userToDelete)}
+              onClick={() => userToAction && handleDisableUser(userToAction)}
               className="bg-red-600 hover:bg-red-700"
             >
               Disable
@@ -273,7 +273,7 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={() => userToDelete && handleEnableUser(userToDelete)}
+              onClick={() => userToAction && handleEnableUser(userToAction)}
               className="bg-green-600 hover:bg-green-700"
             >
               Enable
