@@ -66,10 +66,12 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [userToAction, setUserToAction] = useState<string | null>(null);
   const [editFormData, setEditFormData] = useState({
-    email: user.email,
-    role: user.role,
+    email: user.email
   });
   const [isSaving, setIsSaving] = useState(false);
+  const [isRoleDialogOpen, setIsRoleDialogOpen] = useState(false);
+  const [selectedRole, setSelectedRole] = useState(user.customClaims?.role);
+  const [isUpdatingRole, setIsUpdatingRole] = useState(false);
 
   const handleDisableUser = async (uid: string) => {
     setLoading(true);
@@ -121,11 +123,28 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
     }
   };
 
-  const handleEditUser = async (uid: string) => {
-    setLoading(true);
+  const handleEditUser = async () => {
+    setIsSaving(true);
     try {
-      await setUserRole(uid, editFormData.role);
       toast.success("User role has been successfully updated.", {
+        duration: 3000,
+      });
+      //setIsEditDialogOpen(false);
+    } catch (error) {
+      toast.error("Failed to update user role.", {
+        duration: 3000,
+      });
+    } finally {
+      setIsSaving(false);
+      setIsEditDialogOpen(false);
+    }
+  };
+
+  const handleRoleChange = async () => {
+    setIsUpdatingRole(true);
+    try {
+      await setUserRole(user.uid, selectedRole);
+      toast.success('User role has been changed.', {
         duration: 3000,
       });
     } catch (error) {
@@ -133,7 +152,8 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
         duration: 3000,
       });
     } finally {
-      setLoading(false);
+      setIsUpdatingRole(false);
+      setIsRoleDialogOpen(false);
     }
   };
 
@@ -155,9 +175,13 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
   const openEditDialog = () => {
     setEditFormData({
       email: user.email,
-      role: user.role,
     });
     setIsEditDialogOpen(true);
+  };
+
+  const openRoleDialog = () => {
+    setSelectedRole(user.customClaims?.role);
+    setIsRoleDialogOpen(true);
   };
 
   return (
@@ -180,6 +204,11 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
               <DropdownMenuItem onClick={openEditDialog}>
                 <Edit className="mr-2 h-4 w-4" />
                 Edit User
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={openRoleDialog}>
+                <UserCheck className="mr-2 h-4 w-4" />
+                Change Role
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               {user.disabled ? (
@@ -300,35 +329,10 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
                 id="email"
                 type="email"
                 value={editFormData.email}
-                onChange={(e) =>
-                  setEditFormData((prev) => ({
-                    ...prev,
-                    email: e.target.value,
-                  }))
-                }
+                readOnly
                 className="col-span-3"
                 placeholder="Enter email address"
               />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="role" className="text-right">
-                Role
-              </Label>
-              <Select
-                value={editFormData.role}
-                onValueChange={(value) =>
-                  setEditFormData((prev) => ({ ...prev, role: value }))
-                }
-              >
-                <SelectTrigger className="col-span-3">
-                  <SelectValue placeholder="Select a role" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="user">User</SelectItem>
-                  <SelectItem value="moderator">Moderator</SelectItem>
-                  <SelectItem value="admin">Admin</SelectItem>
-                </SelectContent>
-              </Select>
             </div>
           </div>
           <DialogFooter>
@@ -348,6 +352,62 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
                 </>
               ) : (
                 "Save Changes"
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={isRoleDialogOpen} onOpenChange={setIsRoleDialogOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Change User Role</DialogTitle>
+            <DialogDescription>
+              Select a new role for {user.email}. This will affect their permissions and access level.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="roleSelect" className="text-right">
+                Role
+              </Label>
+              <Select value={selectedRole} onValueChange={setSelectedRole}>
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="Select a role" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="user">User</SelectItem>
+                  <SelectItem value="moderator">Moderator</SelectItem>
+                  <SelectItem value="admin">Admin</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="text-sm text-muted-foreground">
+              <p>
+                <strong>Current role:</strong> <span className="capitalize">{user.role}</span>
+              </p>
+              <p>
+                <strong>New role:</strong> <span className="capitalize">{selectedRole}</span>
+              </p>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setIsRoleDialogOpen(false)}
+              disabled={isUpdatingRole}
+            >
+              Cancel
+            </Button>
+            <Button onClick={handleRoleChange} disabled={isUpdatingRole || selectedRole === user.role}>
+              {isUpdatingRole ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Updating...
+                </>
+              ) : (
+                "Update Role"
               )}
             </Button>
           </DialogFooter>

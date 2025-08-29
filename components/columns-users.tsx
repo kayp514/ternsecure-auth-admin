@@ -78,7 +78,7 @@ export const columns: ColumnDef<UserData>[] = [
       return (
         <div className="flex items-center">
           <div className="bg-card border rounded px-2 py-1 text-xs font-medium shadow-sm max-w-fit">
-            <span className="capitalize">{user.role}</span>
+            <span className="capitalize">{user.customClaims?.role}</span>
           </div>
         </div>
       );
