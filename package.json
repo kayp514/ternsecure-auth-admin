@@ -44,6 +44,6 @@
   },
   "packageManager": "npm@11.3.0",
   "engines": {
-    "node": "^23"
+    "node": "^22"
   }
 }
