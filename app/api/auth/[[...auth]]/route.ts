@@ -10,7 +10,7 @@ const authHandlerOptions: TernSecureHandlerOptions = {
     allowedOrigins: [
       "http://localhost:3000",
       "http://localhost:3001",
-      "https://ternsecure-auth-admin.vercel.app/",
+      "https://ternsecure-auth-admin.vercel.app",
     ],
     allowedMethods: ["GET", "POST"],
   },
