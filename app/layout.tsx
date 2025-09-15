@@ -30,7 +30,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <TernSecureProvider requiresVerification={true}>
+        <TernSecureProvider persistence="browserCookie">
           <ThemeProvider
             attribute="class"
             defaultTheme="light"
