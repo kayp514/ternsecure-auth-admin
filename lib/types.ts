@@ -1,5 +1,4 @@
 import { FirebaseOptions } from 'firebase/app'
-import { ErrorCode, ERRORS } from './errors'
 
 export type UserRole = "admin" | "superuser" | "user" | "guest" | "member" | "staff"
 
@@ -87,23 +86,6 @@ export interface AdminConfigValidationResult {
   config: TernSecureAdminConfig
 }
 
-
-export interface SignInResponse {
-  success: boolean;
-  message?: string;
-  error?: ErrorCode; 
-  user?: any;
-}
-
-export interface AuthError extends Error {
-  code?: string
-  message: string
-  response?: SignInResponse
-}
-
-export function isSignInResponse(value: any): value is SignInResponse {
-  return typeof value === "object" && "success" in value && typeof value.success === "boolean"
-}
 
 
 export interface TernSecureState {
