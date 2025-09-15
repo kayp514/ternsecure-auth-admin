@@ -1,13 +1,11 @@
 "use server";
 
 import { adminTernSecureAuth as adminAuth } from "@/lib/admin-init";
-import { requireAdmin } from "@/lib/auth-middleware";
 import { revalidatePath } from "next/cache";
 import type { UserData } from "@/lib/types";
 import { redis, type DisabledUserRecord } from "@/lib/redis";
 
 export async function getAllUsers(): Promise<UserData[]> {
-  await requireAdmin();
 
   try {
     let allUsers: UserData[] = [];
@@ -17,6 +15,7 @@ export async function getAllUsers(): Promise<UserData[]> {
 
       const batchUsers = listUsersResult.users.map((user) => ({
         uid: user.uid,
+        tenantId: user.tenantId || "",
         email: user.email || "",
         disabled: user.disabled,
         customClaims: user.customClaims || {},
@@ -36,8 +35,6 @@ export async function getAllUsers(): Promise<UserData[]> {
 }
 
 export async function disableUser(uid: string): Promise<void> {
-  await requireAdmin();
-
   try {
     await adminAuth.updateUser(uid, { disabled: true });
     //await redis.set(
@@ -60,8 +57,6 @@ export async function disableUser(uid: string): Promise<void> {
 }
 
 export async function enableUser(uid: string): Promise<void> {
-  await requireAdmin();
-
   try {
     await redis.del(`disabled_user:${uid}`);
     await adminAuth.updateUser(uid, { disabled: false });
@@ -73,7 +68,6 @@ export async function enableUser(uid: string): Promise<void> {
 }
 
 export async function deleteUser(uid: string): Promise<void> {
-  await requireAdmin();
 
   try {
     await adminAuth.deleteUser(uid);
@@ -85,8 +79,6 @@ export async function deleteUser(uid: string): Promise<void> {
 }
 
 export async function setUserRole(uid: string, role: string): Promise<void> {
-  await requireAdmin();
-
   try {
     await adminAuth.setCustomUserClaims(uid, { role });
     revalidatePath("/admin/users");
@@ -94,6 +86,10 @@ export async function setUserRole(uid: string, role: string): Promise<void> {
     console.error("Failed to set user role:", error);
     throw new Error("Failed to set user role");
   }
+}
+
+export async function revalidateUsersPage(): Promise<void> {
+  revalidatePath("/admin/users");
 }
 
 export async function getDisabledUsers(): Promise<DisabledUserRecord[]> {

@@ -1,5 +1,6 @@
+'use client'
 
-import { SignIn } from "@/app/providers/components/sign-in-construct-v2"
+import { SignIn } from "@/components/signin-form";
 
 export default function Page() {
   return <SignIn />

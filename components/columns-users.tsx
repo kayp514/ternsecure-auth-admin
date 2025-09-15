@@ -36,6 +36,30 @@ export const columns: ColumnDef<UserData>[] = [
     },
   },
   {
+    accessorKey: "tenantId",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="h-auto p-0 font-semibold hover:bg-transparent"
+        >
+          Tenant ID
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div
+        className="font-mono text-xs text-gray-600 truncate"
+        title={row.getValue("tenantId")}
+      >
+        {row.getValue("tenantId")}
+      </div>
+    ),
+    enableHiding: true,
+  },
+  {
     accessorKey: "uid",
     header: ({ column }) => {
       return (

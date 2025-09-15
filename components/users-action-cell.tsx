@@ -126,10 +126,9 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
   const handleEditUser = async () => {
     setIsSaving(true);
     try {
-      toast.success("User role has been successfully updated.", {
+      toast.success("User has been successfully updated.", {
         duration: 3000,
       });
-      //setIsEditDialogOpen(false);
     } catch (error) {
       toast.error("Failed to update user role.", {
         duration: 3000,
@@ -141,7 +140,7 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
   };
 
   const handleRoleChange = async () => {
-    setIsUpdatingRole(true);
+    setIsRoleDialogOpen(false);
     try {
       await setUserRole(user.uid, selectedRole);
       toast.success('User role has been changed.', {
@@ -151,8 +150,8 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
       toast.error("Failed to update user role.", {
         duration: 3000,
       });
+      setIsRoleDialogOpen(true);
     } finally {
-      setIsUpdatingRole(false);
       setIsRoleDialogOpen(false);
     }
   };
@@ -201,6 +200,7 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-[160px]">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuSeparator />
               <DropdownMenuItem onClick={openEditDialog}>
                 <Edit className="mr-2 h-4 w-4" />
                 Edit User
@@ -384,7 +384,7 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
             </div>
             <div className="text-sm text-muted-foreground">
               <p>
-                <strong>Current role:</strong> <span className="capitalize">{user.role}</span>
+                <strong>Current role:</strong> <span className="capitalize">{user.customClaims.role}</span>
               </p>
               <p>
                 <strong>New role:</strong> <span className="capitalize">{selectedRole}</span>
@@ -400,7 +400,7 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
             >
               Cancel
             </Button>
-            <Button onClick={handleRoleChange} disabled={isUpdatingRole || selectedRole === user.role}>
+            <Button onClick={handleRoleChange} disabled={isUpdatingRole || selectedRole === user.customClaims?.role}>
               {isUpdatingRole ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

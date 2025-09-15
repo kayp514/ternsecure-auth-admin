@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
-import { TernSecureProvider } from "@/app/providers/TernSecureProvider";
+import { TernSecureProvider } from "@tern-secure/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
