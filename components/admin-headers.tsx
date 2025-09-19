@@ -22,6 +22,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
+import { useAuth } from "@tern-secure/nextjs";
+import { clearNextSessionCookie } from "@/app/actions";
 
 const navigation = [
   { name: "Dashboard", href: "/admin", icon: BarChart3 },
@@ -31,6 +33,18 @@ const navigation = [
 export function AdminHeader() {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
+  const { signOut } = useAuth();
+
+  const createSignOut = async () => {
+    await signOut({
+      redirectUrl: '/dashboard',
+      async onBeforeSignOut() {
+        await clearNextSessionCookie().catch((error) => {
+          console.error('Error clearing session cookie:', error);
+        });
+      },
+    });
+  }
 
   return (
     <header className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
@@ -119,7 +133,7 @@ export function AdminHeader() {
                     <div className="ml-auto w-2 h-2 bg-blue-600 rounded-full" />
                   )}
                 </DropdownMenuItem>
-                <DropdownMenuItem className="text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400 focus:bg-red-50 dark:focus:bg-red-950 cursor-pointer">
+                <DropdownMenuItem onClick={createSignOut} className="text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400 focus:bg-red-50 dark:focus:bg-red-950 cursor-pointer">
                   <LogOut className="mr-2 h-4 w-4" />
                   Sign Out
                 </DropdownMenuItem>

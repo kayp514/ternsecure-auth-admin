@@ -6,7 +6,6 @@ import type { UserData } from "@/lib/types";
 import { redis, type DisabledUserRecord } from "@/lib/redis";
 
 export async function getAllUsers(): Promise<UserData[]> {
-
   try {
     let allUsers: UserData[] = [];
     let nextPageToken: string | undefined = undefined;
@@ -68,7 +67,6 @@ export async function enableUser(uid: string): Promise<void> {
 }
 
 export async function deleteUser(uid: string): Promise<void> {
-
   try {
     await adminAuth.deleteUser(uid);
     revalidatePath("/admin/users");
