@@ -24,10 +24,6 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: "/__/",
-        destination: "/",
-      },
-      {
         source: "/__/auth/:path*",
         destination:
           "https://dev-coffeeconnect-v1.firebaseapp.com/__/auth/:path*",
