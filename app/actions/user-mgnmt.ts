@@ -4,6 +4,7 @@ import { adminTernSecureAuth as adminAuth } from "@/lib/admin-init";
 import { revalidatePath } from "next/cache";
 import type { UserData } from "@/lib/types";
 import { redis, type DisabledUserRecord } from "@/lib/redis";
+import { REDIS_KEY_PREFIX } from "./constants";
 
 export async function getAllUsers(): Promise<UserData[]> {
   try {
@@ -47,7 +48,7 @@ export async function disableUser(uid: string): Promise<void> {
       email: user.email || "",
       disabledTime: new Date().toISOString(),
     };
-    await redis.set(`disabled_user:${uid}`, disabledRecord);
+    await redis.set(`${REDIS_KEY_PREFIX}:${uid}`, disabledRecord);
     revalidatePath("/admin/users");
   } catch (error) {
     console.error("Failed to disable user:", error);
@@ -57,7 +58,7 @@ export async function disableUser(uid: string): Promise<void> {
 
 export async function enableUser(uid: string): Promise<void> {
   try {
-    await redis.del(`disabled_user:${uid}`);
+    await redis.del(`${REDIS_KEY_PREFIX}:${uid}`);
     await adminAuth.updateUser(uid, { disabled: false });
     revalidatePath("/admin/users");
   } catch (error) {
@@ -92,7 +93,7 @@ export async function revalidateUsersPage(): Promise<void> {
 
 export async function getDisabledUsers(): Promise<DisabledUserRecord[]> {
   try {
-    const keys = await redis.keys("disabled_user:*");
+    const keys = await redis.keys(`${REDIS_KEY_PREFIX}:*`);
     if (keys.length === 0) return [];
 
     const records = await redis.mget(...keys);
@@ -107,7 +108,7 @@ export async function getDisabledUserRecord(
   uid: string
 ): Promise<DisabledUserRecord | null> {
   try {
-    const record = await redis.get(`disabled_user:${uid}`);
+    const record = await redis.get(`${REDIS_KEY_PREFIX}:${uid}`);
     return record as DisabledUserRecord | null;
   } catch (error) {
     console.error("Failed to fetch disabled user record from Redis:", error);
