@@ -24,7 +24,7 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: "/__/",
+        source: "/__/:path*",
         destination: "/",
       },
       {
