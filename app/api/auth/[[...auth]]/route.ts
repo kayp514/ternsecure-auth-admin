@@ -16,7 +16,6 @@ const authHandlerOptions: TernSecureHandlerOptions = {
   },
   cookies: {
     httpOnly: true,
-    name: "_session_cookie",
     sameSite: "strict",
   },
   security: {
