@@ -24,8 +24,8 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: "/__/:path*",
-        destination: "/",
+        source: "/__/",
+        destination: "https://ternsecure-auth-admin.vercel.app",
       },
       {
         source: "/__/auth/:path*",
