@@ -15,7 +15,12 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { cn } from "@/lib/utils";
 import { Loader2, Eye, EyeOff } from "lucide-react";
-import { useSignIn, type SignInResponseTree } from "@tern-secure/nextjs";
+import {
+  useSignIn,
+  useSignInContext,
+  useTernSecure,
+} from "@tern-secure/nextjs";
+import type { SignInResponse, TernSecureUser } from "@tern-secure/nextjs";
 
 const appName = process.env.NEXT_PUBLIC_FIREBASE_APP_NAME || "TernSecure";
 
@@ -36,14 +41,12 @@ export interface SignInProps {
   };
 }
 
-export function SignIn({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  const router = useRouter();
+export function SignIn({ className, ...props }: React.ComponentProps<"div">) {
   const { signIn, isLoaded } = useSignIn();
+  const { handleSignInSuccess, redirectAfterSignIn } = useSignInContext();
+  const { createActiveSession } = useTernSecure();
   const [loading, setLoading] = useState(false);
-  const [formError, setFormError] = useState<SignInResponseTree | null>(null);
+  const [formError, setFormError] = useState<SignInResponse | null>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -53,39 +56,24 @@ export function SignIn({
     return null;
   }
 
-  const handleSuccessfulAuth = () => {
-    try {
-      if (process.env.NODE_ENV === "production") {
-        window.location.href = "/";
-      } else {
-        router.push("/");
-      }
-    } catch (err: any) {
-      setFormError({
-        success: false,
-        message: err.message || "Failed to complete authentication",
-        error: "INTERNAL_ERROR",
-        user: null,
-      });
+  const handleSuccess = (user: TernSecureUser | null) => {
+    if (user) {
+      handleSignInSuccess(user);
     }
   };
 
   const signInPasswordField = async () => {
-    try {
-      const res = await signIn.withEmailAndPassword({ email, password });
-      if (!res.success) {
-        setFormError({
-          success: false,
-          message: res.message,
-          user: null,
-          error: res.error,
-        });
-        return;
-      }
+    const res = await signIn.withEmailAndPassword({ email, password });
+    if (res.status === "error") {
+      setFormError({
+        status: "error",
+        error: res.error,
+        message: res.message,
+      });
+    }
 
-      handleSuccessfulAuth();
-    } catch (error) {
-      console.error("Sign-in error:", error);
+    if (res.status === "success") {
+      createActiveSession({ session: res.user });
     }
   };
 
@@ -96,38 +84,24 @@ export function SignIn({
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card
-        className={cn(
-          "w-full max-w-md mx-auto mt-8",
-          className
-        )}
-      >
+      <Card className={cn("w-full max-w-md mx-auto mt-8", className)}>
         <CardHeader className="space-y-1 text-center">
           <CardTitle className={cn("font-bold")}>
             Sign in to {`${appName}`}{" "}
           </CardTitle>
-          <CardDescription
-            className={cn("text-muted-foreground")}
-          >
+          <CardDescription className={cn("text-muted-foreground")}>
             Please sign in to continue
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <form onSubmit={handleEmailSignIn} className="space-y-4">
             {formError && (
-              <Alert
-                variant="destructive"
-                className="animate-in fade-in-50"
-              >
-                <AlertDescription>
-                  {formError.message}
-                </AlertDescription>
+              <Alert variant="destructive" className="animate-in fade-in-50">
+                <AlertDescription>{formError.message}</AlertDescription>
               </Alert>
             )}
             <div className="space-y-2">
-              <Label htmlFor="email">
-                Email
-              </Label>
+              <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -141,9 +115,7 @@ export function SignIn({
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">
-                Password
-              </Label>
+              <Label htmlFor="password">Password</Label>
               <div className="relative">
                 <Input
                   id="password"
@@ -176,11 +148,7 @@ export function SignIn({
                 </Button>
               </div>
             </div>
-            <Button
-              type="submit"
-              disabled={loading}
-              className={cn("w-full")}
-            >
+            <Button type="submit" disabled={loading} className={cn("w-full")}>
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
