@@ -37,7 +37,7 @@ export function AdminHeader() {
 
   const createSignOut = async () => {
     await signOut({
-      redirectUrl: '/dashboard',
+      redirectUrl: './dashboard',
       async onBeforeSignOut() {
         await clearNextSessionCookie().catch((error) => {
           console.error('Error clearing session cookie:', error);
