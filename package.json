@@ -18,7 +18,7 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-switch": "^1.2.5",
     "@tanstack/react-table": "^8.21.3",
-    "@tern-secure/nextjs": "^5.2.0-canary.v20251020032343",
+    "@tern-secure/nextjs": "^5.2.0-canary.v20251020170039",
     "@upstash/redis": "^1.35.2",
     "@vercel/analytics": "^1.5.0",
     "class-variance-authority": "^0.7.1",
@@ -40,7 +40,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "tailwindcss": "^4",
-    "turbo": "^2.5.5",
+    "turbo": "^2.5.8",
     "tw-animate-css": "^1.3.6",
     "typescript": "^5"
   },
