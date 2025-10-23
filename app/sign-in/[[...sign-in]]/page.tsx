@@ -1,7 +1,7 @@
 'use client'
 
-import { SignIn } from "@/components/signin-form";
+import { SignInFormField } from "@/components/signin-form-field";
 
 export default function Page() {
-  return <SignIn />
+  return <SignInFormField />
 }
