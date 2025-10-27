@@ -12,7 +12,7 @@ export default async function ProtectedPage() {
     const refererr = headersList.get('Referer');
 
     const cookieStore = await cookies();
-    const idToken = cookieStore.get('__dev_FIREBASE_[DEFAULT]')?.value;
+    const idToken = cookieStore.get('__HOST-FIREBASE_[DEFAULT]')?.value;
 
     console.log({ referer, refererr, idToken });
     const { token } = await auth();
