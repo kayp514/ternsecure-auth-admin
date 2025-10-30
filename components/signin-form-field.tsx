@@ -80,7 +80,7 @@ export function SignInFormField({
 
   const signInWithGoogle = () => {
     signInWithSocialLogin("google", {
-      mode: "redirect",
+      mode: "popup",
       customParameters: {
         access_type: "offline",
         login_hint: "user@example.com",
