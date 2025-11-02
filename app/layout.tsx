@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { TernSecureProvider } from "@tern-secure/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -27,23 +27,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+    <TernSecureProvider persistence="browserCookie">
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="light"
+        enableSystem
+        disableTransitionOnChange
       >
-        <TernSecureProvider persistence="browserCookie">
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="light"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-            <Analytics />
-            <Toaster />
-          </ThemeProvider>
-        </TernSecureProvider>
-      </body>
-    </html>
+        {children}
+        <Analytics />
+        <Toaster />
+      </ThemeProvider>
+    </TernSecureProvider>
   );
 }
