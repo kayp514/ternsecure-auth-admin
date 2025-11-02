@@ -43,7 +43,7 @@ export interface SignInProps {
 
 export function SignIn({ className, ...props }: React.ComponentProps<"div">) {
   const { signIn, isLoaded } = useSignIn();
-  const { handleSignInSuccess, redirectAfterSignIn } = useSignInContext();
+  const { redirectAfterSignIn } = useSignInContext();
   const { createActiveSession } = useTernSecure();
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState<SignInResponse | null>(null);
@@ -55,12 +55,6 @@ export function SignIn({ className, ...props }: React.ComponentProps<"div">) {
   if (!isLoaded) {
     return null;
   }
-
-  const handleSuccess = (user: TernSecureUser | null) => {
-    if (user) {
-      handleSignInSuccess(user);
-    }
-  };
 
   const signInPasswordField = async () => {
     const res = await signIn.withEmailAndPassword({ email, password });

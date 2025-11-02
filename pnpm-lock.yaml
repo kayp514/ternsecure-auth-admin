@@ -39,7 +39,7 @@ importers:
         specifier: ^8.21.3
         version: 8.21.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@tern-secure/nextjs':
-        specifier: 5.2.0-canary.v20251030165007
+        specifier: ^5.2.0-canary.v20251023005301
         version: 5.2.0-canary.v20251030165007(firebase-admin@12.7.0)(firebase@11.10.0)(next@15.4.4(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.1.16)
       '@upstash/redis':
         specifier: ^1.35.2
