@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -32,7 +32,7 @@ export function SignInFormField({
   const { signIn, isLoaded } = useSignIn();
   const ctx = useSignInContext();
   const { afterSignInUrl } = ctx;
-  const { createActiveSession } = useTernSecure();
+  const { createActiveSession, getRedirectResult } = useTernSecure();
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState<SignInResponse | null>(null);
   const [email, setEmail] = useState("");
@@ -40,6 +40,9 @@ export function SignInFormField({
   const [showPassword, setShowPassword] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
 
+  useEffect(() => {
+    getRedirectResult()
+  }, []);
 
   const signInPasswordField = async () => {
     const res = await signIn?.withEmailAndPassword({ email, password });
@@ -80,7 +83,7 @@ export function SignInFormField({
 
   const signInWithGoogle = () => {
     signInWithSocialLogin("google", {
-      mode: "popup",
+      mode: "redirect",
       customParameters: {
         access_type: "offline",
         login_hint: "user@example.com",
