@@ -1,7 +1,4 @@
-import {
-  ternSecureMiddleware,
-  createRouteMatcher,
-} from "@tern-secure/nextjs/server";
+import { ternSecureProxy, createRouteMatcher } from '@tern-secure/nextjs/server';
 
 const publicPaths = createRouteMatcher([
   "/sign-in",
@@ -19,7 +16,7 @@ export const config = {
   ],
 };
 
-export default ternSecureMiddleware(
+export default ternSecureProxy(
   async (auth, request) => {
     //const url = new URL('/unauthorized', request.url);
     if (!publicPaths(request)) {
@@ -41,5 +38,6 @@ export default ternSecureMiddleware(
         },
       },
     },
+    session: { maxAge: '1 hour' }
   }
 );
