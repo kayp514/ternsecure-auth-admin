@@ -36,6 +36,30 @@ export const columns: ColumnDef<UserData>[] = [
     },
   },
   {
+    accessorKey: "phoneNumber",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="h-auto p-0 font-semibold hover:bg-transparent"
+        >
+          Phone
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const phoneNumber = row.getValue("phoneNumber") as string | null;
+      return phoneNumber ? (
+        <div className="font-medium text-sm text-left">{phoneNumber}</div>
+      ) : (
+        <div className="text-sm text-gray-400">N/A</div>
+      );
+    },
+    enableHiding: true,
+  },
+  {
     accessorKey: "tenantId",
     header: ({ column }) => {
       return (

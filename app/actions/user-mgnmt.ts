@@ -17,6 +17,7 @@ export async function getAllUsers(): Promise<UserData[]> {
         uid: user.uid,
         tenantId: user.tenantId || "",
         email: user.email || "",
+        phoneNumber: user.phoneNumber || null,
         disabled: user.disabled,
         customClaims: user.customClaims || {},
         createdAt: user.metadata.creationTime,
@@ -113,5 +114,16 @@ export async function getDisabledUserRecord(
   } catch (error) {
     console.error("Failed to fetch disabled user record from Redis:", error);
     return null;
+  }
+}
+
+
+export async function editPhoneNumber(uid: string, phoneNumber: string): Promise<void> {
+  try {
+    await adminAuth.updateUser(uid, { phoneNumber: phoneNumber || null });
+    revalidatePath("/admin/users");
+  } catch (error) {
+    console.error("Failed to update phone number:", error);
+    throw new Error("Failed to update phone number");
   }
 }

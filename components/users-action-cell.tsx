@@ -52,6 +52,7 @@ import {
   enableUser,
   deleteUser,
   setUserRole,
+  editPhoneNumber,
 } from "@/app/actions/user-mgnmt";
 
 interface UserActionsCellProps {
@@ -66,7 +67,8 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [userToAction, setUserToAction] = useState<string | null>(null);
   const [editFormData, setEditFormData] = useState({
-    email: user.email
+    email: user.email,
+    phoneNumber: user.phoneNumber || "",
   });
   const [isSaving, setIsSaving] = useState(false);
   const [isRoleDialogOpen, setIsRoleDialogOpen] = useState(false);
@@ -126,11 +128,14 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
   const handleEditUser = async () => {
     setIsSaving(true);
     try {
+      if (editFormData.phoneNumber !== (user.phoneNumber || "")) {
+        await editPhoneNumber(user.uid, editFormData.phoneNumber);
+      }
       toast.success("User has been successfully updated.", {
         duration: 3000,
       });
     } catch (error) {
-      toast.error("Failed to update user role.", {
+      toast.error("Failed to update user.", {
         duration: 3000,
       });
     } finally {
@@ -174,6 +179,7 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
   const openEditDialog = () => {
     setEditFormData({
       email: user.email,
+      phoneNumber: user.phoneNumber || "",
     });
     setIsEditDialogOpen(true);
   };
@@ -332,6 +338,21 @@ export function UserActionsCell({ user }: UserActionsCellProps) {
                 readOnly
                 className="col-span-3"
                 placeholder="Enter email address"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="phoneNumber" className="text-right">
+                Phone
+              </Label>
+              <Input
+                id="phoneNumber"
+                type="tel"
+                value={editFormData.phoneNumber}
+                onChange={(e) =>
+                  setEditFormData({ ...editFormData, phoneNumber: e.target.value })
+                }
+                className="col-span-3"
+                placeholder="Enter phone number"
               />
             </div>
           </div>

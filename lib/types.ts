@@ -5,6 +5,7 @@ export type UserRole = "admin" | "superuser" | "user" | "guest" | "member" | "st
 export interface UserData {
   uid: string
   email: string
+  phoneNumber?: string | null
   tenantId: string
   disabled: boolean
   createdAt: string
