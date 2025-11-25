@@ -17,8 +17,6 @@ import { cn } from "@/lib/utils";
 import { Loader2, Eye, EyeOff } from "lucide-react";
 import {
   useSignIn,
-  useSignInContext,
-  useTernSecure,
 } from "@tern-secure/nextjs";
 import type { SignInResponse, TernSecureUser } from "@tern-secure/nextjs";
 
@@ -43,8 +41,8 @@ export interface SignInProps {
 
 export function SignIn({ className, ...props }: React.ComponentProps<"div">) {
   const { signIn, isLoaded } = useSignIn();
-  const { redirectAfterSignIn } = useSignInContext();
-  const { createActiveSession } = useTernSecure();
+  //const { redirectAfterSignIn } = useSignInContext();
+  //const { createActiveSession } = useTernSecure();
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState<SignInResponse | null>(null);
   const [email, setEmail] = useState("");
@@ -57,7 +55,7 @@ export function SignIn({ className, ...props }: React.ComponentProps<"div">) {
   }
 
   const signInPasswordField = async () => {
-    const res = await signIn.withEmailAndPassword({ email, password });
+    const res = await signIn.authenticateWithPassword({ email, password });
     if (res.status === "error") {
       setFormError({
         status: "error",
@@ -67,7 +65,7 @@ export function SignIn({ className, ...props }: React.ComponentProps<"div">) {
     }
 
     if (res.status === "success") {
-      createActiveSession({ session: res.user });
+      //createActiveSession({ session: res.user });
     }
   };
 

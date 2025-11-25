@@ -15,8 +15,6 @@ import {
 import { Input } from "@/components/ui/input";
 import {
   useSignIn,
-  useSignInContext,
-  useTernSecure,
 } from "@tern-secure/nextjs";
 import type {
   SignInResponse,
@@ -30,9 +28,9 @@ export function SignInFormField({
   ...props
 }: React.ComponentProps<"div">) {
   const { signIn, isLoaded } = useSignIn();
-  const ctx = useSignInContext();
-  const { afterSignInUrl } = ctx;
-  const { createActiveSession, getRedirectResult } = useTernSecure();
+  //const ctx = useSignInContext();
+  //const { afterSignInUrl } = ctx;
+  //const { createActiveSession, getRedirectResult } = useTernSecure();
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState<SignInResponse | null>(null);
   const [email, setEmail] = useState("");
@@ -41,11 +39,11 @@ export function SignInFormField({
   const [passwordFocused, setPasswordFocused] = useState(false);
 
   useEffect(() => {
-    getRedirectResult()
+    //getRedirectResult()
   }, []);
 
   const signInPasswordField = async () => {
-    const res = await signIn?.withEmailAndPassword({ email, password });
+    const res = await signIn?.authenticateWithPassword({ email, password });
     if (res?.status === "error") {
       setFormError({
         status: "error",
@@ -54,7 +52,7 @@ export function SignInFormField({
       });
     }
     if (res?.status === "success") {
-      createActiveSession({ session: res.user, redirectUrl: afterSignInUrl });
+      //createActiveSession({ session: res.user, redirectUrl: "/" });
     }
   };
 
@@ -62,7 +60,7 @@ export function SignInFormField({
     provider: string,
     customOptions: SocialProviderOptions
   ) => {
-    const res = await signIn?.withSocialProvider(provider, {
+    const res = await signIn?.authenticateWithSocialProvider(provider, {
       mode: customOptions.mode || "popup",
       customParameters: customOptions.customParameters,
       scopes: customOptions.scopes,
@@ -77,7 +75,7 @@ export function SignInFormField({
     }
 
     if (res?.status === "success") {
-      createActiveSession({ session: res.user, redirectUrl: afterSignInUrl });
+      //createActiveSession({ session: res.user, redirectUrl: "/" });
     }
   };
 
