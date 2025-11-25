@@ -27,7 +27,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <TernSecureProvider persistence="browserCookie">
+    <TernSecureProvider
+      appName="TernSecure"
+      appCheck={{
+        provider: "reCaptchaEnterprise",
+        siteKey: "6LfzGRgsAAAAAGEvbwbcLgT4IHWmuWv4kEDRA5hi",
+        isTokenAutoRefreshEnabled: true,
+      }}
+      ternUIUrl="https://cdn.jsdelivr.net/npm/@tern-secure/auth@1.1.0-canary.v20251125170702/dist/ternsecure.browser.js"
+      persistence="browserCookie"
+    >
       <ThemeProvider
         attribute="class"
         defaultTheme="light"

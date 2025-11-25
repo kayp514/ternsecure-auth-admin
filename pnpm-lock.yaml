@@ -39,8 +39,8 @@ importers:
         specifier: ^8.21.3
         version: 8.21.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@tern-secure/nextjs':
-        specifier: 5.2.0-canary.v20251108045933
-        version: 5.2.0-canary.v20251108045933(firebase-admin@12.7.0)(firebase@12.5.0)(next@15.4.4(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.1.16)
+        specifier: 5.2.0-canary.v20251125170702
+        version: 5.2.0-canary.v20251125170702(firebase-admin@12.7.0)(firebase@12.5.0)(next@15.4.4(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.1.16)
       '@upstash/redis':
         specifier: ^1.35.2
         version: 1.35.6
@@ -1125,20 +1125,14 @@ packages:
     resolution: {integrity: sha512-ldZXEhOBb8Is7xLs01fR3YEc3DERiz5silj8tnGkFZytt1abEvl/GhUmCE0PMLaMPTa3Jk4HbKmRlHmu+gCftg==}
     engines: {node: '>=12'}
 
-  '@tern-secure/auth@1.1.0-canary.v20251108045933':
-    resolution: {integrity: sha512-8J7pRtd/CR36PAZX7L5Vtv4lJE8ZEL0Urb9JlHmIfq0NOWIPmKqOSmN1NR6TZmYhPv6Dfd2uoFsgvHlZB/RadA==}
-    engines: {node: '>=20'}
-    peerDependencies:
-      firebase: ^12.0.0
-
-  '@tern-secure/backend@1.2.0-canary.v20251108045933':
-    resolution: {integrity: sha512-BTFQK1elc41esgkeRthzsY63RQJV825UE5tv/DSsuxIuyZIIJYqAy8uDHBheB8cjW0lDNfxJ3ZAW2u5Ji9df1g==}
+  '@tern-secure/backend@1.2.0-canary.v20251125170702':
+    resolution: {integrity: sha512-CfQNa7pafwiKFoWPczEzHMkPkBsC8r/2k8nnfFWIKT59hzSfoFsrJ/whpTJo7+Y9arFf3a/2+XKbv91y2/BH5A==}
     engines: {node: '>=20'}
     peerDependencies:
       firebase-admin: ^12.7.0
 
-  '@tern-secure/nextjs@5.2.0-canary.v20251108045933':
-    resolution: {integrity: sha512-Ww0KaFURd64K2FRF1p+a0b5ZI8Z0E35h8KPI8gGdhfXf+aKn5Arv0UTORznQcNCJXrXDvFUxvhsqCQhGQRwmsw==}
+  '@tern-secure/nextjs@5.2.0-canary.v20251125170702':
+    resolution: {integrity: sha512-YgtLRfwabT9AKB3uX/W3v9esfRD+qIMWKH0UH1pYg+RjmJNkRKcbpgjMBJpaWIjl0Qx9/lj0kKU1Xlpfhbb9lQ==}
     engines: {node: '>=20'}
     peerDependencies:
       firebase: ^12.0.0
@@ -1146,14 +1140,14 @@ packages:
       react: ^19.0.0 || ^19.0.0-0
       react-dom: ^19.0.0 || ^19.0.0-0
 
-  '@tern-secure/react@1.2.0-canary.v20251108045933':
-    resolution: {integrity: sha512-t7PJPSEko0Fo/aBL/rY+lL25DNhDDdBj2ns/P+Y6t1C3G40LrCzh7rYRHjZv5HO4ar3v94Y/kExQnt5mq+rldQ==}
+  '@tern-secure/react@1.2.0-canary.v20251125170702':
+    resolution: {integrity: sha512-yy9oJH0ggPD7wMmQX1ebJ8k4q7OLmXBov0T9I/yczzCUxqiglrikVL945B4wtoZ4rJ8Y+VNzG6nZ9qv4VmFdBg==}
     peerDependencies:
       react: ^19.0.0 || ^19.0.0-0
       react-dom: ^19.0.0 || ^19.0.0-0
 
-  '@tern-secure/shared@1.3.0-canary.v20251108045933':
-    resolution: {integrity: sha512-V0KtUwEP+jO7IVJYLW7BF/xe3cR1fCoB0wNNDsfvxgoiSMLk4/rZJ2kXpeNFfiMAW7tlM+gRSY3JTUEg73up4w==}
+  '@tern-secure/shared@1.3.0-canary.v20251125170702':
+    resolution: {integrity: sha512-/GexaooYL9P2cScznLgpqVvqRetvDh6uyRKSgniz5cSWPHHg4h7B46K7+3y5vbU9V5daVzisk4xgVnz/WGZCCQ==}
     engines: {node: '>=20'}
     peerDependencies:
       react: ^19.0.0 || ^19.0.0-0
@@ -1164,8 +1158,8 @@ packages:
       react-dom:
         optional: true
 
-  '@tern-secure/types@1.1.0-canary.v20251108045933':
-    resolution: {integrity: sha512-/98Ss7JXCzxNHP0HBkcARfwst7XgFnH8f+arRdx8bQ3TfU0qNGQr5vHyrlco9rRTOQBgf/OSctUF0gctKyWNAg==}
+  '@tern-secure/types@1.1.0-canary.v20251125170702':
+    resolution: {integrity: sha512-SzMDj9DTkHYRn0RqmSlbx3UZgJFyrM5St2kjmalnSXPWsQaqqRx2uSXsD+BspDJE1c4evi6rF/Vpb0hOlJXJkw==}
     engines: {node: '>=20'}
 
   '@tootallnate/once@2.0.0':
@@ -1360,6 +1354,10 @@ packages:
   delayed-stream@1.0.0:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
     engines: {node: '>=0.4.0'}
+
+  dequal@2.0.3:
+    resolution: {integrity: sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==}
+    engines: {node: '>=6'}
 
   detect-libc@2.1.2:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
@@ -3149,21 +3147,10 @@ snapshots:
 
   '@tanstack/table-core@8.21.3': {}
 
-  '@tern-secure/auth@1.1.0-canary.v20251108045933(firebase@12.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@tern-secure/backend@1.2.0-canary.v20251125170702(firebase-admin@12.7.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@tern-secure/shared': 1.3.0-canary.v20251108045933(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      '@tern-secure/types': 1.1.0-canary.v20251108045933
-      firebase: 12.5.0
-      server-only: 0.0.1
-      tslib: 2.8.1
-    transitivePeerDependencies:
-      - react
-      - react-dom
-
-  '@tern-secure/backend@1.2.0-canary.v20251108045933(firebase-admin@12.7.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
-    dependencies:
-      '@tern-secure/shared': 1.3.0-canary.v20251108045933(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      '@tern-secure/types': 1.1.0-canary.v20251108045933
+      '@tern-secure/shared': 1.3.0-canary.v20251125170702(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@tern-secure/types': 1.1.0-canary.v20251125170702
       '@upstash/redis': 1.35.6
       cookie: 1.0.2
       firebase-admin: 12.7.0
@@ -3173,12 +3160,12 @@ snapshots:
       - react
       - react-dom
 
-  '@tern-secure/nextjs@5.2.0-canary.v20251108045933(firebase-admin@12.7.0)(firebase@12.5.0)(next@15.4.4(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.1.16)':
+  '@tern-secure/nextjs@5.2.0-canary.v20251125170702(firebase-admin@12.7.0)(firebase@12.5.0)(next@15.4.4(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.1.16)':
     dependencies:
-      '@tern-secure/backend': 1.2.0-canary.v20251108045933(firebase-admin@12.7.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      '@tern-secure/react': 1.2.0-canary.v20251108045933(firebase@12.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.1.16)
-      '@tern-secure/shared': 1.3.0-canary.v20251108045933(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      '@tern-secure/types': 1.1.0-canary.v20251108045933
+      '@tern-secure/backend': 1.2.0-canary.v20251125170702(firebase-admin@12.7.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@tern-secure/react': 1.2.0-canary.v20251125170702(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.1.16)
+      '@tern-secure/shared': 1.3.0-canary.v20251125170702(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@tern-secure/types': 1.1.0-canary.v20251125170702
       '@upstash/redis': 1.35.6
       firebase: 12.5.0
       jose: 5.10.0
@@ -3191,11 +3178,10 @@ snapshots:
       - firebase-admin
       - tailwindcss
 
-  '@tern-secure/react@1.2.0-canary.v20251108045933(firebase@12.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.1.16)':
+  '@tern-secure/react@1.2.0-canary.v20251125170702(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@4.1.16)':
     dependencies:
-      '@tern-secure/auth': 1.1.0-canary.v20251108045933(firebase@12.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      '@tern-secure/shared': 1.3.0-canary.v20251108045933(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      '@tern-secure/types': 1.1.0-canary.v20251108045933
+      '@tern-secure/shared': 1.3.0-canary.v20251125170702(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@tern-secure/types': 1.1.0-canary.v20251125170702
       class-variance-authority: 0.7.1
       clsx: 2.1.1
       lucide-react: 0.468.0(react@19.1.0)
@@ -3205,12 +3191,12 @@ snapshots:
       tailwindcss-animate: 1.0.7(tailwindcss@4.1.16)
       tslib: 2.8.1
     transitivePeerDependencies:
-      - firebase
       - tailwindcss
 
-  '@tern-secure/shared@1.3.0-canary.v20251108045933(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@tern-secure/shared@1.3.0-canary.v20251125170702(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@tern-secure/types': 1.1.0-canary.v20251108045933
+      '@tern-secure/types': 1.1.0-canary.v20251125170702
+      dequal: 2.0.3
       glob-to-regexp: 0.4.1
       js-cookie: 3.0.5
       tslib: 2.8.1
@@ -3218,7 +3204,7 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  '@tern-secure/types@1.1.0-canary.v20251108045933': {}
+  '@tern-secure/types@1.1.0-canary.v20251125170702': {}
 
   '@tootallnate/once@2.0.0':
     optional: true
@@ -3405,6 +3391,8 @@ snapshots:
 
   delayed-stream@1.0.0:
     optional: true
+
+  dequal@2.0.3: {}
 
   detect-libc@2.1.2: {}
 
