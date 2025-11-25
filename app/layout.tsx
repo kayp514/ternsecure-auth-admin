@@ -32,7 +32,7 @@ export default function RootLayout({
       apiUrl="ternsecure-auth-admin.vercel.app"
       appCheck={{
         provider: "reCaptchaEnterprise",
-        siteKey: "6LfzGRgsAAAAAGEvbwbcLgT4IHWmuWv4kEDRA5hi",
+        siteKey: "6LcSGxgsAAAAACeeo12X2kYaO_VcsWZb8gzmfLRq",
         isTokenAutoRefreshEnabled: true,
       }}
       ternUIUrl="https://cdn.jsdelivr.net/npm/@tern-secure/auth@1.1.0-canary.v20251125170702/dist/ternsecure.browser.js"
