@@ -30,9 +30,9 @@ export default function RootLayout({
     <TernSecureProvider
       appName="TernSecure"
       appCheck={{
-        provider: "reCaptchaV3",
-        siteKey: '6LfzGRgsAAAAAGEvbwbcLgT4IHWmuWv4kEDRA5hi',
-        //siteKey: "6LcSGxgsAAAAACeeo12X2kYaO_VcsWZb8gzmfLRq",
+        provider: "reCaptchaEnterprise",
+        //siteKey: '6LfzGRgsAAAAAGEvbwbcLgT4IHWmuWv4kEDRA5hi',
+        siteKey: "6LcSGxgsAAAAACeeo12X2kYaO_VcsWZb8gzmfLRq",
         isTokenAutoRefreshEnabled: true,
       }}
       apiUrl="ternsecure-auth-admin.vercel.app"
