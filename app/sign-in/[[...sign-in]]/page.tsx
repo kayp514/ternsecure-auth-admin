@@ -1,5 +1,9 @@
 import { SignIn } from "@tern-secure/nextjs";
 
 export default function Page() {
-  return <SignIn initialValues={{ phoneNumber: "" }} />;
+  return (
+    <SignIn
+    //initialValues={{ phoneNumber: "" }}
+    />
+  );
 }
