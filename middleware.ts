@@ -27,6 +27,9 @@ export default ternSecureProxy(
   },
   {
     debug: true,
+    appCheck: {
+      strategy: "memory"
+    },
     checkRevoked: {
       enabled: true,
       adapter: {
