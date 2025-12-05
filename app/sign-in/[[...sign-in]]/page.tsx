@@ -3,7 +3,8 @@ import { SignIn } from "@tern-secure/nextjs";
 export default function Page() {
   return (
     <SignIn
-    //initialValues={{ phoneNumber: "" }}
+      socialProviders={[{ name: "google", options: { mode: "redirect" } }]}
+      //initialValues={{ phoneNumber: "" }}
     />
   );
 }
