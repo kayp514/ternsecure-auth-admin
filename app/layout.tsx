@@ -36,7 +36,7 @@ export default function RootLayout({
         isTokenAutoRefreshEnabled: true,
       }}
       apiUrl="ternsecure-auth-admin.vercel.app"
-      ternUIUrl="https://cdn.jsdelivr.net/npm/@tern-secure/auth@1.1.0-canary.v20251205181217/dist/ternsecure.browser.js"
+      ternUIUrl="https://cdn.jsdelivr.net/npm/@tern-secure/auth@1.1.0-canary.v20251205183932/dist/ternsecure.browser.js"
       persistence="browserCookie"
     >
       <ThemeProvider
