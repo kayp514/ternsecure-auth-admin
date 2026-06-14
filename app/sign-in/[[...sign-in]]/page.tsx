@@ -4,7 +4,7 @@ export default function Page() {
   return (
     <SignIn
       socialProviders={[{ name: "google", options: { mode: "redirect" } }]}
-      initialValues={{ phoneNumber: "" }}
+      //initialValues={{ phoneNumber: "" }}
     />
   );
 }
