@@ -3,13 +3,13 @@
 import { auth } from "@tern-secure/nextjs/server";
 
 export default async function ProtectedPage() {
-  const { user } = await auth();
+  const { sessionClaims, userId } = await auth();
 
-  if (user) {
+  if (userId) {
     return (
       <div>
         <h1>Protected Page</h1>
-        <p>Welcome, {user.email}!</p>
+        <p>Welcome, {sessionClaims.email}!</p>
       </div>
     );
   }
